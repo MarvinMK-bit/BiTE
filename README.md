@@ -2,16 +2,6 @@
 
 **Bitcoin High School** ([bitcoinhighschool.com](https://bitcoinhighschool.com)) is an online STEM education platform that incentivises learning with real Bitcoin rewards. Students sign up, attempt timed quizzes across categories like Game Theory, Computer Science, Cryptography, AI, and Robotics, and earn Satoshi (sats) based on their scores. Rewards are paid out instantly via the Bitcoin Lightning Network to a linked [Blink](https://www.blink.sv/) wallet.
 
-<!-- ### Key Features
-
-- **STEM Quizzes** — Timed, category-based quizzes with multiple-choice questions covering mathematics, AI, robotics, cryptography, and more.
-- **AI-Powered Previews** — Gemini-generated explanations for each question to help students understand correct answers.
-- **Bitcoin Rewards** — A learn-to-earn model where quiz performance is rewarded with Satoshi, delivered instantly via the Lightning Network.
-- **Chess Puzzles** — Interactive chess puzzles with a Glicko-2 rating system for competitive skill tracking.
-- **Category Certificates** — Downloadable PDF certificates awarded upon completing all quizzes in a category.
-- **Leaderboard & Rankings** — Global student rankings based on quiz performance.
-- **Admin Dashboard** — Full quiz, question, and user management for administrators. -->
-
 ---
 
 ## Prerequisites
