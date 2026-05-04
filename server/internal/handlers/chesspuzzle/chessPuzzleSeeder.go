@@ -282,13 +282,13 @@ func createIndexes(db *gorm.DB) {
 	}
 }
 
-func init() {
-	go func() {
-		time.Sleep(2 * time.Minute)
-		// time.Sleep(15 * time.Second)
-		env := os.Getenv("GO_ENV")
-		if env == "production" {
-			ChessPuzzleSeeder()
-		}
-	}()
-}
+// func init() {
+// 	go func() {
+// 		time.Sleep(2 * time.Minute)
+// 		// time.Sleep(15 * time.Second)
+// 		env := os.Getenv("GO_ENV")
+// 		if env == "production" {
+// 			ChessPuzzleSeeder()
+// 		}
+// 	}()
+// }
