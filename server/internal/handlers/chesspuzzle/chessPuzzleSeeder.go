@@ -55,7 +55,8 @@ func ChessPuzzleSeeder() {
 		// if err != nil {
 		// 	log.Fatalf("Error getting absolute path for CSV file: %v", err)
 		// }
-		csvPath = "/app/server/internal/data/lichess_puzzles_filtered.csv"
+		// csvPath = "/app/server/internal/data/lichess_puzzles_filtered.csv"
+		csvPath = "/tmp/puzzle-data/lichess_puzzles_filtered.csv"
 	default:
 		log.Fatalf("Unrecognized GO_ENV: '%s' — set GO_ENV to 'development' or 'production'", env)
 	}
