@@ -3,8 +3,8 @@ name: Build and Deploy
 on:
   push:
     branches:
-      # - main
-      - dev
+      - main
+      # - dev
 
 jobs:
   build:
@@ -66,6 +66,7 @@ jobs:
           scp -o StrictHostKeyChecking=no -o IdentitiesOnly=no scripts/clean-up-cron-job.sh ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:~/
           scp -o StrictHostKeyChecking=no -o IdentitiesOnly=no scripts/deploy.sh ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:~/
           scp -o StrictHostKeyChecking=no -o IdentitiesOnly=no docker-compose.yaml ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:~/
+          scp -o StrictHostKeyChecking=no -o IdentitiesOnly=no scripts/copy-puzzle-csv.sh ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }}:~/
 
       - name: Deploy to Hostinger Ocean using SSH
         run: |
@@ -74,3 +75,7 @@ jobs:
       - name: Setup hourly Docker cleanup cron job
         run: |
           ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=no ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }} "chmod +x ~/clean-up-cron-job.sh && ~/clean-up-cron-job.sh"
+
+      - name: Copy puzzle CSV into Docker volume
+        run: |
+          ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=no ${{ secrets.HOSTINGER_USERNAME }}@${{ secrets.HOSTINGER_HOST }} "chmod +x ~/copy-puzzle-csv.sh && ~/copy-puzzle-csv.sh"

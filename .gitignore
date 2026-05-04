@@ -13,3 +13,7 @@ build
 bite
 # bite/.wrangler
 
+# Lichess puzzle data
+server/internal/data/lichess_*
+
+

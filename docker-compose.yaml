@@ -5,6 +5,8 @@ services:
     image: mmarvinken/bite-backend:latest
     env_file:
       - ./.env
+    volumes:
+      - puzzle-data:/app/server/internal/data
     deploy:
       replicas: 1
       update_config:
@@ -174,3 +176,5 @@ volumes:
     driver: local
   grafana-data:
     driver: local  
+  puzzle-data:
+    driver: local
