@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/lib/pq"
+)
 
 var db = Db()
 
@@ -406,4 +410,61 @@ type CertificateAwarded struct {
 	User                *User                `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL" json:"user,omitempty"`
 	CategoryCertificate *CategoryCertificate `gorm:"foreignKey:CategoryCertificateID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL" json:"categoryCertificate,omitempty"`
 	Attachments         []*Attachment        `gorm:"foreignKey:CertificateAwardedID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL" json:"attachments,omitempty"`
+}
+
+type ChessPuzzle struct {
+	ID              string         `gorm:"column:id;primaryKey"`
+	FEN             string         `gorm:"column:fen;not null"`
+	Moves           string         `gorm:"column:moves;not null"`
+	Rating          int            `gorm:"column:rating;not null;default:1500"`
+	RatingDeviation int            `gorm:"column:ratingDeviation;not null;default:80"`
+	Volatility      float64        `gorm:"column:volatility;not null;default:0.09"`
+	Popularity      int16          `gorm:"column:popularity;not null;default:0"`
+	NbPlays         int            `gorm:"column:nbPlays;not null;default:0"`
+	Themes          pq.StringArray `gorm:"column:themes;type:text[];not null;default:'{}'"`
+	GameUrl         string         `gorm:"column:gameUrl"`
+	OpeningTags     pq.StringArray `gorm:"column:openingTags;type:text[];not null;default:'{}'"`
+	Color           string         `gorm:"column:color;not null;default:'w'"`
+	CreatedAt       time.Time      `gorm:"column:createdAt;not null;autoCreateTime"`
+	UpdatedAt       time.Time      `gorm:"column:updatedAt;not null;autoUpdateTime"`
+}
+
+func (ChessPuzzle) TableName() string {
+	return "chess_puzzles"
+}
+
+type ChessPuzzleRound struct {
+	ID                 string    `gorm:"column:id;primaryKey"`
+	ChessPuzzleID      string    `gorm:"column:chessPuzzleId;not null"`
+	UserID             string    `gorm:"column:userId;not null"`
+	Angle              string    `gorm:"column:angle;not null;default:'mix'"`
+	Win                bool      `gorm:"column:win;not null"`
+	TimeMs             int       `gorm:"column:timeMs"`
+	SatsEarned         int       `gorm:"column:satsEarned;not null;default:0"`
+	PuzzleRatingBefore int       `gorm:"column:puzzleRatingBefore;not null"`
+	PuzzleRatingAfter  int       `gorm:"column:puzzleRatingAfter;not null"`
+	UserRatingBefore   int       `gorm:"column:userRatingBefore;not null"`
+	UserRatingAfter    int       `gorm:"column:userRatingAfter;not null"`
+	CreatedAt          time.Time `gorm:"column:createdAt;not null;autoCreateTime"`
+	UpdatedAt          time.Time `gorm:"column:updatedAt;not null;autoUpdateTime"`
+}
+
+func (ChessPuzzleRound) TableName() string {
+	return "chess_puzzle_rounds"
+}
+
+type ChessUserPuzzleRating struct {
+	ID              string     `gorm:"column:id;primaryKey"`
+	UserID          string     `gorm:"column:userId;not null;uniqueIndex"`
+	Rating          int        `gorm:"column:rating;not null;default:1500"`
+	RatingDeviation int        `gorm:"column:ratingDeviation;not null;default:500"`
+	Volatility      float64    `gorm:"column:volatility;not null;default:0.09"`
+	GamesPlayed     int        `gorm:"column:gamesPlayed;not null;default:0"`
+	LastPlayedAt    *time.Time `gorm:"column:lastPlayedAt"`
+	CreatedAt       time.Time  `gorm:"column:createdAt;not null;autoCreateTime"`
+	UpdatedAt       time.Time  `gorm:"column:updatedAt;not null;autoUpdateTime"`
+}
+
+func (ChessUserPuzzleRating) TableName() string {
+	return "chess_user_puzzle_ratings"
 }
