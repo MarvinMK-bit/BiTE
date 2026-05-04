@@ -13,6 +13,7 @@ import (
 	"github.com/Tibz-Dankan/BiTE/internal/handlers/attemptduration"
 	"github.com/Tibz-Dankan/BiTE/internal/handlers/auth"
 	"github.com/Tibz-Dankan/BiTE/internal/handlers/categorycertificate"
+	"github.com/Tibz-Dankan/BiTE/internal/handlers/chesspuzzle"
 	"github.com/Tibz-Dankan/BiTE/internal/handlers/health"
 	"github.com/Tibz-Dankan/BiTE/internal/handlers/monitor"
 	"github.com/Tibz-Dankan/BiTE/internal/handlers/question"
@@ -220,6 +221,12 @@ func main() {
 	aiPreviewGroup.Patch("/:id/default", middlewares.Auth, middlewares.IsAdmin, aipreview.MakeDefaultAIPreview)
 	aiPreviewGroup.Post("/quiz/:quizID", middlewares.Auth, middlewares.IsAdmin, aipreview.PostAIPreviewsByQuiz)
 	aiPreviewGroup.Get("/quiz/:quizID/exists", middlewares.Auth, aipreview.CheckAIPreviewsByQuiz)
+
+	// Chess Puzzle Attempt
+	chessPuzzleAttemptGroup := app.Group("/api/v1/chesspuzzle", func(c *fiber.Ctx) error {
+		return c.Next()
+	})
+	chessPuzzleAttemptGroup.Post("/attempt", middlewares.Auth, chesspuzzle.PostChessPuzzleAttempt)
 
 	// Metrics
 	app.Get("/metrics", monitor.GetMetrics)
